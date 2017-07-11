@@ -12,19 +12,28 @@ const sb = null;
 const APP_ID = 'CB66B4F1-F440-4859-BDC9-A18D534184E8';
 const userId = 'email@email.com';
 const accessToken = '0a14d402a18ca34d099d3dbb315ba89c38b63b3a';
-
+const UNIQUE_HANDLER_ID = '!@#!@#!@#!@$#!!@#@##@'
 export default class Root extends Component {
-  
-  async componentDidMount() {
+
+  componentWillMount() {
     sb = new SendBird({appId: APP_ID});
-    await sb.connect(userId, function(user, error) {
+    sb.removeChannelHandler(UNIQUE_HANDLER_ID);
+    sb.connect(userId, function(user, error) {
       console.log('user', user);
       sb.updateCurrentUserInfo('Update no App', function(response, error) {
         console.log('update user', response, error);
       });
     });
+    console.log('sendbird', sb);  
+  }
+  componentDidMount() {
+    var ChannelHandler = new sb.ChannelHandler();
 
-    console.log('sendbird', sb);
+    ChannelHandler.onMessageReceived = function(channel, message){
+        console.log(channel, message);
+    };
+
+    sb.addChannelHandler(UNIQUE_HANDLER_ID, ChannelHandler);
   } 
 
   createChannel(){
