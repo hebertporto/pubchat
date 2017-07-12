@@ -6,6 +6,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import { GiftedChat } from 'react-native-gifted-chat';
+
 import SendBird from 'sendbird';
 
 const sb = null;
@@ -14,6 +16,10 @@ const userId = 'email@email.com';
 const accessToken = '0a14d402a18ca34d099d3dbb315ba89c38b63b3a';
 const UNIQUE_HANDLER_ID = '!@#!@#!@#!@$#!!@#@##@'
 export default class Root extends Component {
+  
+  state = {
+    messages: [],
+  };
 
   componentWillMount() {
     sb = new SendBird({appId: APP_ID});
@@ -25,6 +31,70 @@ export default class Root extends Component {
       });
     });
     console.log('sendbird', sb);  
+    this.setState({
+      messages: [
+        {
+          _id: 1,
+          text: 'Hello developer',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+        {
+          _id: 2,
+          text: 'Hello back',
+          createdAt: new Date(),
+          user: {
+            _id: 1,
+            name: 'ReactJs',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+        {
+          _id: 3,
+          text: 'Hello 2',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+        {
+          _id: 4,
+          text: 'Hello 3',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+        {
+          _id: 5,
+          text: 'Hello 0',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+        {
+          _id: 6,
+          text: 'Hello 4',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+      ],
+    });
   }
   componentDidMount() {
     var ChannelHandler = new sb.ChannelHandler();
@@ -37,7 +107,7 @@ export default class Root extends Component {
   } 
 
   createChannel(){
-    var userIds = ['email@email.com', '654321'];
+    var userIds = ['email@email.com', 'xxx'];
     // distinct is false 
     sb.GroupChannel.createChannelWithUserIds(userIds, false, 'Dr. XMen', '', '', function(createdChannel, error) {
         if (error) {
@@ -107,6 +177,15 @@ getOldMessages(){
 
 // sendbird_group_channel_34516608_d401d69954b03090fda480da14283c39114f51c6
   render() {
+    // return (
+    //   <GiftedChat
+    //     messages={this.state.messages}
+    //     onSend={(messages) => this.onSend(messages)}
+    //     user={{
+    //       _id: 1,
+    //     }}
+    //   />
+    // );
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
